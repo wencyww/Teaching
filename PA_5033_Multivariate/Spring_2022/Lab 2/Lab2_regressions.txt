@@ -1,0 +1,22 @@
+	(1)	(2)	(3)	(4)
+VARIABLES	OLS	Distributed	Dynamic	Differenced
+				
+usgnp	2.92e-05***	-2.08e-05	4.68e-06	
+	(6.43e-06)	(8.24e-05)	(4.43e-06)	
+usgnp_1		-7.44e-05		
+		(0.000125)		
+usgnp_2		0.000133		
+		(8.22e-05)		
+prunem_1			0.856***	
+			(0.0890)	
+usgnp_d				-0.000147***
+				(3.65e-05)
+prunemp_1_d				0.291**
+				(0.143)
+Constant	0.0812***	0.0706***	0.0107	0.0101***
+	(0.0160)	(0.0166)	(0.0110)	(0.00334)
+				
+Observations	38	36	37	36
+R-squared	0.364	0.488	0.837	0.367
+Standard errors in parentheses				
+*** p<0.01, ** p<0.05, * p<0.1				

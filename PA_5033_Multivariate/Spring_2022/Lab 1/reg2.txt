@@ -1,0 +1,14 @@
+	(1)
+VARIABLES	Model 3
+	
+age	42.14
+	(34.05)
+famsze	-482.6**
+	(219.6)
+Constant	4,826*
+	(2,637)
+	
+Observations	3,064
+R-squared	0.002
+Standard errors in parentheses	
+*** p<0.01, ** p<0.05, * p<0.1	

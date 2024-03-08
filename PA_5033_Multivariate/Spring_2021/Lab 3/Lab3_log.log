@@ -1,0 +1,405 @@
+----------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  O:\wang6054\PA5033_Spring2021\Lab 3\Lab3_log.log
+  log type:  text
+ opened on:  26 Mar 2021, 12:52:55
+
+. ssc install outreg2
+checking outreg2 consistency and verifying not already installed...
+all files already exist and are up to date.
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+. use PRtime.dta
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.         tsset yr
+        time variable:  yr, 50 to 87
+                delta:  1 unit
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.         gen prgnp_1 = L.prgnp   
+(1 missing value generated)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.         reg prepop avewage prgnp_1 usgnp yr
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(4, 32)        =     50.14
+       Model |  .034914612         4  .008728653   Prob > F        =    0.0000
+    Residual |  .005570632        32  .000174082   R-squared       =    0.8624
+-------------+----------------------------------   Adj R-squared   =    0.8452
+       Total |  .040485244        36   .00112459   Root MSE        =    .01319
+
+------------------------------------------------------------------------------
+      prepop |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     avewage |  -.0412476   .0068107    -6.06   0.000    -.0551205   -.0273747
+     prgnp_1 |   .0000304   .0000116     2.61   0.013     6.73e-06    .0000541
+       usgnp |    .000135   .0000279     4.84   0.000     .0000782    .0001918
+          yr |  -.0096926   .0018979    -5.11   0.000    -.0135585   -.0058267
+       _cons |   .7423331   .0749158     9.91   0.000     .5897347    .8949315
+------------------------------------------------------------------------------
+
+.         outreg2 using Lab3_regressions.doc, replace ctitle(OLS 1)
+Lab3_regressions.doc
+dir : seeout
+
+. 
+end of do-file
+
+. sum avewage
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     avewage |         38    2.072576      1.4972     .39782     4.8795
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.         reg avewage prepop prgnp
+
+      Source |       SS           df       MS      Number of obs   =        38
+-------------+----------------------------------   F(2, 35)        =    300.53
+       Model |  78.3757269         2  39.1878634   Prob > F        =    0.0000
+    Residual |  4.56381506        35  .130394716   R-squared       =    0.9450
+-------------+----------------------------------   Adj R-squared   =    0.9418
+       Total |   82.939542        37  2.24160924   Root MSE        =     .3611
+
+------------------------------------------------------------------------------
+     avewage |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      prepop |  -11.14991   2.544263    -4.38   0.000    -16.31504   -5.984778
+       prgnp |   .0009349   .0000749    12.49   0.000     .0007829    .0010868
+       _cons |   3.993616   1.149867     3.47   0.001     1.659263     6.32797
+------------------------------------------------------------------------------
+
+.         outreg2 using Lab3_regressions.doc, append ctitle(OLS 2)
+Lab3_regressions.doc
+dir : seeout
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.         reg prepop prgnp prgnp_1 usgnp yr
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(4, 32)        =     44.65
+       Model |  .034333544         4  .008583386   Prob > F        =    0.0000
+    Residual |    .0061517        32  .000192241   R-squared       =    0.8481
+-------------+----------------------------------   Adj R-squared   =    0.8291
+       Total |  .040485244        36   .00112459   Root MSE        =    .01387
+
+------------------------------------------------------------------------------
+      prepop |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       prgnp |   .0001705    .000031     5.49   0.000     .0001073    .0002337
+     prgnp_1 |  -.0001165   .0000287    -4.07   0.000    -.0001749   -.0000581
+       usgnp |  -.0000109   .0000287    -0.38   0.706    -.0000694    .0000475
+          yr |  -.0076858   .0020125    -3.82   0.001    -.0117851   -.0035864
+       _cons |   .7906815   .0776855    10.18   0.000     .6324413    .9489218
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.                 test prgnp_1 usgnp yr
+
+ ( 1)  prgnp_1 = 0
+ ( 2)  usgnp = 0
+ ( 3)  yr = 0
+
+       F(  3,    32) =   21.09
+            Prob > F =    0.0000
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.                 predict yhat
+(option xb assumed; fitted values)
+(1 missing value generated)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.                 rename yhat prepop_IV
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.         reg avewage prgnp prgnp_1 usgnp yr
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(4, 32)        =    354.43
+       Model |  78.2917474         4  19.5729368   Prob > F        =    0.0000
+    Residual |  1.76718294        32  .055224467   R-squared       =    0.9779
+-------------+----------------------------------   Adj R-squared   =    0.9752
+       Total |  80.0589303        36  2.22385917   Root MSE        =      .235
+
+------------------------------------------------------------------------------
+     avewage |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       prgnp |  -.0031531   .0005258    -6.00   0.000    -.0042241    -.002082
+     prgnp_1 |    .002744   .0004858     5.65   0.000     .0017544    .0037335
+       usgnp |   .0031509   .0004863     6.48   0.000     .0021604    .0041413
+          yr |  -.0397811   .0341099    -1.17   0.252    -.1092607    .0296986
+       _cons |  -1.360918   1.316689    -1.03   0.309    -4.042926    1.321091
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.                 test prgnp
+
+ ( 1)  prgnp = 0
+
+       F(  1,    32) =   35.96
+            Prob > F =    0.0000
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.                 predict yhat
+(option xb assumed; fitted values)
+(1 missing value generated)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.                 rename yhat avewage_IV
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.                 reg prepop avewage_IV prgnp_1 usgnp yr
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(4, 32)        =     44.65
+       Model |  .034333542         4  .008583386   Prob > F        =    0.0000
+    Residual |  .006151702        32  .000192241   R-squared       =    0.8481
+-------------+----------------------------------   Adj R-squared   =    0.8291
+       Total |  .040485244        36   .00112459   Root MSE        =    .01387
+
+------------------------------------------------------------------------------
+      prepop |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  avewage_IV |  -.0540632   .0098392    -5.49   0.000     -.074105   -.0340215
+     prgnp_1 |   .0000318   .0000123     2.60   0.014     6.86e-06    .0000568
+       usgnp |   .0001594    .000032     4.98   0.000     .0000942    .0002247
+          yr |  -.0098365   .0019959    -4.93   0.000    -.0139019    -.005771
+       _cons |   .7171059     .07984     8.98   0.000     .5544771    .8797348
+------------------------------------------------------------------------------
+
+.                 outreg2 using Lab3_regressions.doc, append ctitle(2SLS 1)
+Lab3_regressions.doc
+dir : seeout
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+.                 reg avewage prepop_IV prgnp
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(2, 34)        =    337.04
+       Model |  76.2147121         2   38.107356   Prob > F        =    0.0000
+    Residual |  3.84421819        34  .113065241   R-squared       =    0.9520
+-------------+----------------------------------   Adj R-squared   =    0.9492
+       Total |  80.0589303        36  2.22385917   Root MSE        =    .33625
+
+------------------------------------------------------------------------------
+     avewage |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   prepop_IV |  -15.90656    3.04874    -5.22   0.000    -22.10234   -9.710771
+       prgnp |   .0008644    .000079    10.95   0.000     .0007039    .0010248
+       _cons |   6.006266   1.359544     4.42   0.000      3.24334    8.769193
+------------------------------------------------------------------------------
+
+.                 outreg2 using Lab3_regressions.doc, append ctitle(2SLS 2)
+Lab3_regressions.doc
+dir : seeout
+
+. 
+end of do-file
+
+. shellout using `"Lab3_regressions.doc"'
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+. ivreg prepop prgnp_1 usgnp yr (avewage = prgnp prgnp_1 usgnp yr)
+
+Instrumental variables (2SLS) regression
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(4, 32)        =     44.39
+       Model |  .034298225         4  .008574556   Prob > F        =    0.0000
+    Residual |  .006187019        32  .000193344   R-squared       =    0.8472
+-------------+----------------------------------   Adj R-squared   =    0.8281
+       Total |  .040485244        36   .00112459   Root MSE        =     .0139
+
+------------------------------------------------------------------------------
+      prepop |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     avewage |  -.0540632   .0098674    -5.48   0.000    -.0741624   -.0339641
+     prgnp_1 |   .0000318   .0000123     2.59   0.014     6.79e-06    .0000569
+       usgnp |   .0001594   .0000321     4.97   0.000      .000094    .0002248
+          yr |  -.0098365   .0020016    -4.91   0.000    -.0139136   -.0057594
+       _cons |   .7171059   .0800689     8.96   0.000     .5540109    .8802009
+------------------------------------------------------------------------------
+Instrumented:  avewage
+Instruments:   prgnp_1 usgnp yr prgnp
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+. ivreg prepop prgnp_1 usgnp yr (avewage = prgnp prgnp_1 usgnp yr), first
+
+First-stage regressions
+-----------------------
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(4, 32)        =    354.43
+       Model |  78.2917474         4  19.5729368   Prob > F        =    0.0000
+    Residual |  1.76718294        32  .055224467   R-squared       =    0.9779
+-------------+----------------------------------   Adj R-squared   =    0.9752
+       Total |  80.0589303        36  2.22385917   Root MSE        =      .235
+
+------------------------------------------------------------------------------
+     avewage |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     prgnp_1 |    .002744   .0004858     5.65   0.000     .0017544    .0037335
+       usgnp |   .0031509   .0004863     6.48   0.000     .0021604    .0041413
+          yr |  -.0397811   .0341099    -1.17   0.252    -.1092607    .0296986
+       prgnp |  -.0031531   .0005258    -6.00   0.000    -.0042241    -.002082
+       _cons |  -1.360918   1.316689    -1.03   0.309    -4.042926    1.321091
+------------------------------------------------------------------------------
+
+
+Instrumental variables (2SLS) regression
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(4, 32)        =     44.39
+       Model |  .034298225         4  .008574556   Prob > F        =    0.0000
+    Residual |  .006187019        32  .000193344   R-squared       =    0.8472
+-------------+----------------------------------   Adj R-squared   =    0.8281
+       Total |  .040485244        36   .00112459   Root MSE        =     .0139
+
+------------------------------------------------------------------------------
+      prepop |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     avewage |  -.0540632   .0098674    -5.48   0.000    -.0741624   -.0339641
+     prgnp_1 |   .0000318   .0000123     2.59   0.014     6.79e-06    .0000569
+       usgnp |   .0001594   .0000321     4.97   0.000      .000094    .0002248
+          yr |  -.0098365   .0020016    -4.91   0.000    -.0139136   -.0057594
+       _cons |   .7171059   .0800689     8.96   0.000     .5540109    .8802009
+------------------------------------------------------------------------------
+Instrumented:  avewage
+Instruments:   prgnp_1 usgnp yr prgnp
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+. ivreg avewage prgnp (prepop = prgnp prgnp_1 usgnp yr)
+
+Instrumental variables (2SLS) regression
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(2, 34)        =    332.95
+       Model |  76.1675334         2  38.0837667   Prob > F        =    0.0000
+    Residual |  3.89139686        34  .114452849   R-squared       =    0.9514
+-------------+----------------------------------   Adj R-squared   =    0.9485
+       Total |  80.0589303        36  2.22385917   Root MSE        =    .33831
+
+------------------------------------------------------------------------------
+     avewage |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      prepop |  -15.90655    3.06739    -5.19   0.000    -22.14024   -9.672866
+       prgnp |   .0008644   .0000794    10.88   0.000     .0007029    .0010258
+       _cons |   6.006265   1.367861     4.39   0.000     3.226436    8.786094
+------------------------------------------------------------------------------
+Instrumented:  prepop
+Instruments:   prgnp prgnp_1 usgnp yr
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+. ivreg prepop prgnp_1 usgnp yr (avewage = prgnp_1 usgnp yr)
+equation not identified; must have at least as many instruments not in
+the regression as there are instrumented variables
+r(481);
+
+end of do-file
+
+r(481);
+
+. do "C:\Users\wang6054\AppData\Local\Temp\35\STD3d4c_000000.tmp"
+
+. ivreg prepop prgnp_1 usgnp yr (avewage = prgnp)
+
+Instrumental variables (2SLS) regression
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(4, 32)        =     44.39
+       Model |  .034298225         4  .008574556   Prob > F        =    0.0000
+    Residual |  .006187019        32  .000193344   R-squared       =    0.8472
+-------------+----------------------------------   Adj R-squared   =    0.8281
+       Total |  .040485244        36   .00112459   Root MSE        =     .0139
+
+------------------------------------------------------------------------------
+      prepop |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     avewage |  -.0540632   .0098674    -5.48   0.000    -.0741624   -.0339641
+     prgnp_1 |   .0000318   .0000123     2.59   0.014     6.79e-06    .0000569
+       usgnp |   .0001594   .0000321     4.97   0.000      .000094    .0002248
+          yr |  -.0098365   .0020016    -4.91   0.000    -.0139136   -.0057594
+       _cons |   .7171059   .0800689     8.96   0.000     .5540109    .8802009
+------------------------------------------------------------------------------
+Instrumented:  avewage
+Instruments:   prgnp_1 usgnp yr prgnp
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+

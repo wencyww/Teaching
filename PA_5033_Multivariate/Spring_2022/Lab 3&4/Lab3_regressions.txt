@@ -1,0 +1,22 @@
+	(1)	(2)
+VARIABLES	OLS 1	OLS 2
+		
+avewage	-0.0412***	
+	(0.00681)	
+prgnp_1	3.04e-05**	
+	(1.16e-05)	
+usgnp	0.000135***	
+	(2.79e-05)	
+yr	-0.00969***	
+	(0.00190)	
+prepop		-11.15***
+		(2.544)
+prgnp		0.000935***
+		(7.49e-05)
+Constant	0.742***	3.994***
+	(0.0749)	(1.150)
+		
+Observations	37	38
+R-squared	0.862	0.945
+Standard errors in parentheses		
+*** p<0.01, ** p<0.05, * p<0.1		

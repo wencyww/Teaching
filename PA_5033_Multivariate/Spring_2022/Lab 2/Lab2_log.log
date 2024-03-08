@@ -1,0 +1,460 @@
+--------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  O:\wang6054\PA 5033 Spring 2022\Lab 2\Lab2_log.log
+  log type:  text
+ opened on:  25 Mar 2022, 12:47:04
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+. ssc install outreg2
+checking outreg2 consistency and verifying not already installed...
+all files already exist and are up to date.
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+. use PRtime_data.dta
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         sum prepop
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+      prepop |         38    .3906579    .0356221       .318        .47
+
+.         sum kaitz
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+       kaitz |         38    .3344266    .0971498     .15525       .468
+
+.         sum yrn
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+         yrn |         38        19.5    11.11306          1         38
+
+.         
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         regress prepop kaitz yrn
+
+      Source |       SS           df       MS      Number of obs   =        38
+-------------+----------------------------------   F(2, 35)        =     45.97
+       Model |  .034005961         2  .017002981   Prob > F        =    0.0000
+    Residual |  .012944592        35  .000369845   R-squared       =    0.7243
+-------------+----------------------------------   Adj R-squared   =    0.7085
+       Total |  .046950553        37  .001268934   Root MSE        =    .01923
+
+------------------------------------------------------------------------------
+      prepop | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       kaitz |  -.2416991   .0957103    -2.53   0.016    -.4360014   -.0473969
+         yrn |  -.0006447   .0008367    -0.77   0.446    -.0023432    .0010539
+       _cons |   .4840594   .0178387    27.14   0.000     .4478449    .5202739
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         tsset yr
+
+Time variable: yr, 50 to 87
+        Delta: 1 unit
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         gen kaitz_1 = L.kaitz
+(1 missing value generated)
+
+.         gen kaitz_2 = L2.kaitz
+(2 missing values generated)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         gen kaitz_3 = kaitz[_n+1]
+(1 missing value generated)
+
+.         gen kaitz_4 = kaitz[_n+2]
+(2 missing values generated)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         reg prepop kaitz yrn kaitz_1 kaitz_2 kaitz_3 kaitz_4
+
+      Source |       SS           df       MS      Number of obs   =        34
+-------------+----------------------------------   F(6, 27)        =      9.54
+       Model |  .023804862         6  .003967477   Prob > F        =    0.0000
+    Residual |  .011233375        27  .000416051   R-squared       =    0.6794
+-------------+----------------------------------   Adj R-squared   =    0.6082
+       Total |  .035038236        33  .001061765   Root MSE        =     .0204
+
+------------------------------------------------------------------------------
+      prepop | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       kaitz |  -.1324454   .2408864    -0.55   0.587    -.6267035    .3618127
+         yrn |  -.0013965   .0017748    -0.79   0.438    -.0050381    .0022452
+     kaitz_1 |  -.1418036   .2377695    -0.60   0.556    -.6296663    .3460591
+     kaitz_2 |   .0602204   .1870477     0.32   0.750    -.3235697    .4440105
+     kaitz_3 |  -.0789183   .2422006    -0.33   0.747    -.5758728    .4180362
+     kaitz_4 |   .1678556   .1727753     0.97   0.340      -.18665    .5223612
+       _cons |   .4564712   .0344862    13.24   0.000     .3857114     .527231
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         reg prunemp usgnp
+
+      Source |       SS           df       MS      Number of obs   =        38
+-------------+----------------------------------   F(1, 36)        =     20.59
+       Model |  .018910123         1  .018910123   Prob > F        =    0.0001
+    Residual |  .033054953        36  .000918193   R-squared       =    0.3639
+-------------+----------------------------------   Adj R-squared   =    0.3462
+       Total |  .051965076        37  .001404462   Root MSE        =     .0303
+
+------------------------------------------------------------------------------
+     prunemp | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       usgnp |   .0000292   6.43e-06     4.54   0.000     .0000161    .0000422
+       _cons |   .0811848   .0160233     5.07   0.000     .0486881    .1136815
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         outreg2 using Lab2_regressions.doc, replace ctitle(OLS)
+Lab2_regressions.doc
+dir : seeout
+
+. 
+end of do-file
+
+. shellout using `"Lab2_regressions.doc"'
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         gen usgnp_1 = L.usgnp
+(1 missing value generated)
+
+.         gen usgnp_2 = L2.usgnp
+(2 missing values generated)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         reg prunemp usgnp usgnp_1 usgnp_2
+
+      Source |       SS           df       MS      Number of obs   =        36
+-------------+----------------------------------   F(3, 32)        =     10.16
+       Model |  .025299094         3  .008433031   Prob > F        =    0.0001
+    Residual |  .026555876        32  .000829871   R-squared       =    0.4879
+-------------+----------------------------------   Adj R-squared   =    0.4399
+       Total |  .051854969        35  .001481571   Root MSE        =    .02881
+
+------------------------------------------------------------------------------
+     prunemp | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       usgnp |  -.0000208   .0000824    -0.25   0.803    -.0001887    .0001472
+     usgnp_1 |  -.0000744    .000125    -0.60   0.556     -.000329    .0001802
+     usgnp_2 |   .0001333   .0000822     1.62   0.115    -.0000341    .0003006
+       _cons |   .0706374   .0166112     4.25   0.000     .0368016    .1044732
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         outreg2 using Lab2_regressions.doc, append ctitle(Distributed)
+Lab2_regressions.doc
+dir : seeout
+
+. 
+end of do-file
+
+. shellout using `"Lab2_regressions.doc"'
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.                 corr usgnp usgnp_1 usgnp_2
+(obs=36)
+
+             |    usgnp  usgnp_1  usgnp_2
+-------------+---------------------------
+       usgnp |   1.0000
+     usgnp_1 |   0.9968   1.0000
+     usgnp_2 |   0.9924   0.9965   1.0000
+
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.                 vif
+
+    Variable |       VIF       1/VIF  
+-------------+----------------------
+     usgnp_1 |    353.19    0.002831
+       usgnp |    160.81    0.006218
+     usgnp_2 |    147.46    0.006781
+-------------+----------------------
+    Mean VIF |    220.49
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         reg prunemp usgnp prunem_1
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(2, 34)        =     87.22
+       Model |  .043477901         2   .02173895   Prob > F        =    0.0000
+    Residual |  .008473826        34   .00024923   R-squared       =    0.8369
+-------------+----------------------------------   Adj R-squared   =    0.8273
+       Total |  .051951727        36  .001443104   Root MSE        =    .01579
+
+------------------------------------------------------------------------------
+     prunemp | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       usgnp |   4.68e-06   4.43e-06     1.06   0.298    -4.33e-06    .0000137
+    prunem_1 |   .8557534   .0890378     9.61   0.000     .6748069      1.0367
+       _cons |   .0107433   .0109791     0.98   0.335    -.0115689    .0330556
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.                 dis 0.00000468 / (1-.8557)
+.00003243
+
+. 
+end of do-file
+
+. help dis
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.                         dwstat
+
+Durbin–Watson d-statistic(  3,    37) =  1.429416
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         outreg2 using Lab2_regressions.doc, append ctitle(Dynamic)            
+>   
+Lab2_regressions.doc
+dir : seeout
+
+. 
+end of do-file
+
+. shellout using `"Lab2_regressions.doc"'
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.                 qui reg prunemp usgnp prunem_1
+
+.                 predict e, resid
+(1 missing value generated)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.                 gen e_1 = L.e
+(2 missing values generated)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.                 reg e usgnp prunem_1 e_1
+
+      Source |       SS           df       MS      Number of obs   =        36
+-------------+----------------------------------   F(3, 32)        =      1.19
+       Model |  .000834628         3  .000278209   Prob > F        =    0.3307
+    Residual |    .0075091        32  .000234659   R-squared       =    0.1000
+-------------+----------------------------------   Adj R-squared   =    0.0157
+       Total |  .008343728        35  .000238392   Root MSE        =    .01532
+
+------------------------------------------------------------------------------
+           e | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       usgnp |   3.61e-06   4.73e-06     0.76   0.451    -6.03e-06    .0000132
+    prunem_1 |  -.1104588   .1021505    -1.08   0.288    -.3185325    .0976149
+         e_1 |   .3716319   .1988499     1.87   0.071    -.0334121     .776676
+       _cons |   .0072263   .0115295     0.63   0.535    -.0162586    .0307111
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.                         display 36 * 0.1000
+3.6
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+. graph twoway scatter usgnp yr
+
+. 
+end of do-file
+
+. graph twoway scatter kaitz yr
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+. graph twoway scatter usgnp yr
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         reg usgnp usgnp_1
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(1, 35)        =   5552.44
+       Model |  20695631.6         1  20695631.6   Prob > F        =    0.0000
+    Residual |   130455.66        35  3727.30457   R-squared       =    0.9937
+-------------+----------------------------------   Adj R-squared   =    0.9936
+       Total |  20826087.2        36  578502.423   Root MSE        =    61.052
+
+------------------------------------------------------------------------------
+       usgnp | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     usgnp_1 |   1.015189    .013624    74.51   0.000     .9875311    1.042848
+       _cons |   35.24995   33.34328     1.06   0.298     -32.4405    102.9404
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.                 gen usgnp_d = d.usgnp
+(1 missing value generated)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.                 reg usgnp_d usgnp_1
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(1, 35)        =      1.24
+       Model |  4632.99593         1  4632.99593   Prob > F        =    0.2725
+    Residual |   130455.66        35  3727.30457   R-squared       =    0.0343
+-------------+----------------------------------   Adj R-squared   =    0.0067
+       Total |  135088.656        36  3752.46266   Root MSE        =    61.052
+
+------------------------------------------------------------------------------
+     usgnp_d | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     usgnp_1 |   .0151893    .013624     1.11   0.272    -.0124689    .0428476
+       _cons |   35.24995   33.34328     1.06   0.298     -32.4405    102.9404
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+. graph twoway scatter usgnp yr
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.                 gen prunemp_d = d.prunemp
+(1 missing value generated)
+
+.                 gen prunemp_1_d = d.prunem_1
+(2 missing values generated)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.                 reg prunemp_d usgnp_d prunemp_1_d
+
+      Source |       SS           df       MS      Number of obs   =        36
+-------------+----------------------------------   F(2, 33)        =      9.57
+       Model |  .003338723         2  .001669362   Prob > F        =    0.0005
+    Residual |  .005757498        33   .00017447   R-squared       =    0.3670
+-------------+----------------------------------   Adj R-squared   =    0.3287
+       Total |  .009096221        35  .000259892   Root MSE        =    .01321
+
+------------------------------------------------------------------------------
+   prunemp_d | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     usgnp_d |  -.0001472   .0000365    -4.03   0.000    -.0002214    -.000073
+ prunemp_1_d |   .2907298   .1425028     2.04   0.049     .0008056     .580654
+       _cons |   .0101259   .0033434     3.03   0.005     .0033237    .0169281
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b10_000000.tmp"
+
+.         outreg2 using Lab2_regressions.doc, append ctitle(Differenced)
+Lab2_regressions.doc
+dir : seeout
+
+. 
+end of do-file
+
+. shellout using `"Lab2_regressions.doc"'
+
+. shellout using `"Lab2_regressions.doc"'
+
+. shellout using `"Lab2_regressions.doc"'
+
+. exit, clear

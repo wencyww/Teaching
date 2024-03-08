@@ -1,0 +1,20 @@
+	(1)	(2)
+VARIABLES	Model 1	Model 2
+		
+educ	0.599***	0.505***
+	(0.0513)	(0.0506)
+exper	0.0223*	
+	(0.0121)	
+tenure	0.169***	
+	(0.0216)	
+nonwhite		-0.119
+		(0.460)
+female		-2.275***
+		(0.279)
+Constant	-2.873***	0.650
+	(0.729)	(0.681)
+		
+Observations	526	526
+R-squared	0.306	0.259
+Standard errors in parentheses		
+*** p<0.01, ** p<0.05, * p<0.1		

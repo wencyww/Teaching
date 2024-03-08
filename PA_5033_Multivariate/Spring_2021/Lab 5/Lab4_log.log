@@ -1,0 +1,591 @@
+----------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  O:\wang6054\PA5033_Spring2021\Lab 5\Lab4_log.log
+  log type:  text
+ opened on:  16 Apr 2021, 12:53:00
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         reg fired age perf
+
+      Source |       SS           df       MS      Number of obs   =     1,000
+-------------+----------------------------------   F(2, 997)       =     78.53
+       Model |  16.3857846         2  8.19289228   Prob > F        =    0.0000
+    Residual |  104.014215       997  .104327197   R-squared       =    0.1361
+-------------+----------------------------------   Adj R-squared   =    0.1344
+       Total |       120.4       999  .120520521   Root MSE        =      .323
+
+------------------------------------------------------------------------------
+       fired |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         age |   .0143392   .0012695    11.30   0.000      .011848    .0168304
+        perf |  -.0101926   .0068303    -1.49   0.136     -.023596    .0032107
+       _cons |  -.4878892   .0736446    -6.62   0.000    -.6324054   -.3433731
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.                 predict yhat
+(option xb assumed; fitted values)
+(1 missing value generated)
+
+.                 rename yhat prob
+
+.                 gen probr = prob
+(1 missing value generated)
+
+.                 replace probr = 0 if prob < 0.5
+(1,000 real changes made)
+
+.                         * So, if your predicted is < 50%, you are considered not fired
+.                 replace probr = 1 if prob >= 0.5
+(1 real change made)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.                 count if fired == 1 & probr == 1
+  0
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.                 count if fired == 0 & probr == 0
+  860
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.                 count if fired == 1
+  140
+
+.                 count if fired == 0
+  860
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         logit fired age perf
+
+Iteration 0:   log likelihood = -404.96349  
+Iteration 1:   log likelihood = -339.66771  
+Iteration 2:   log likelihood = -325.20838  
+Iteration 3:   log likelihood = -324.78173  
+Iteration 4:   log likelihood = -324.78153  
+Iteration 5:   log likelihood = -324.78153  
+
+Logistic regression                             Number of obs     =      1,000
+                                                LR chi2(2)        =     160.36
+                                                Prob > chi2       =     0.0000
+Log likelihood = -324.78153                     Pseudo R2         =     0.1980
+
+------------------------------------------------------------------------------
+       fired |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         age |   .1348337   .0142877     9.44   0.000     .1068303    .1628371
+        perf |  -.5060311   .1306587    -3.87   0.000    -.7621175   -.2499447
+       _cons |  -6.714433   .9299865    -7.22   0.000    -8.537173   -4.891693
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.                 margins, dydx (age perf) atmeans
+
+Conditional marginal effects                    Number of obs     =      1,000
+Model VCE    : OIM
+
+Expression   : Pr(fired), predict()
+dy/dx w.r.t. : age perf
+at           : age             =      46.654 (mean)
+               perf            =      4.0316 (mean)
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         age |   .0097444    .001066     9.14   0.000     .0076551    .0118337
+        perf |  -.0365708   .0086569    -4.22   0.000     -.053538   -.0196035
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.                 margins, dydx (age perf)
+
+Average marginal effects                        Number of obs     =      1,000
+Model VCE    : OIM
+
+Expression   : Pr(fired), predict()
+dy/dx w.r.t. : age perf
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         age |   .0133557   .0012717    10.50   0.000     .0108633    .0158482
+        perf |  -.0501241   .0126757    -3.95   0.000     -.074968   -.0252802
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         lstat
+
+Logistic model for fired
+
+              -------- True --------
+Classified |         D            ~D  |      Total
+-----------+--------------------------+-----------
+     +     |        14             8  |         22
+     -     |       126           852  |        978
+-----------+--------------------------+-----------
+   Total   |       140           860  |       1000
+
+Classified + if predicted Pr(D) >= .5
+True D defined as fired != 0
+--------------------------------------------------
+Sensitivity                     Pr( +| D)   10.00%
+Specificity                     Pr( -|~D)   99.07%
+Positive predictive value       Pr( D| +)   63.64%
+Negative predictive value       Pr(~D| -)   87.12%
+--------------------------------------------------
+False + rate for true ~D        Pr( +|~D)    0.93%
+False - rate for true D         Pr( -| D)   90.00%
+False + rate for classified +   Pr(~D| +)   36.36%
+False - rate for classified -   Pr( D| -)   12.88%
+--------------------------------------------------
+Correctly classified                        86.60%
+--------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         predict yhat
+(option pr assumed; Pr(fired))
+(1 missing value generated)
+
+.         rename yhat problogit
+
+.         gen problogitr = problogit
+(1 missing value generated)
+
+.         replace problogitr = 0 if problogit < 0.5
+(978 real changes made)
+
+.         replace problogitr = 1 if problogit >= 0.5
+(23 real changes made)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         twoway (scatter age perf), by (problogitr fired )
+
+. 
+end of do-file
+
+. twoway (scatter age perf), by (probr fired )
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         gen newage = age
+(1 missing value generated)
+
+.         replace newage = 0 if age < 50
+(634 real changes made)
+
+.         replace newage = 1 if age >= 50
+(367 real changes made)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         logit fired newage perf
+
+Iteration 0:   log likelihood = -404.96349  
+Iteration 1:   log likelihood = -361.45444  
+Iteration 2:   log likelihood = -352.39623  
+Iteration 3:   log likelihood = -352.17623  
+Iteration 4:   log likelihood = -352.17619  
+
+Logistic regression                             Number of obs     =      1,000
+                                                LR chi2(2)        =     105.57
+                                                Prob > chi2       =     0.0000
+Log likelihood = -352.17619                     Pseudo R2         =     0.1304
+
+------------------------------------------------------------------------------
+       fired |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      newage |   1.497132   .2054543     7.29   0.000     1.094449    1.899815
+        perf |  -.5495806   .1254036    -4.38   0.000    -.7953671   -.3037941
+       _cons |  -.5632523   .4861158    -1.16   0.247    -1.516022    .3895172
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+.  do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         logit fired newage perf
+
+Iteration 0:   log likelihood = -404.96349  
+Iteration 1:   log likelihood = -361.45444  
+Iteration 2:   log likelihood = -352.39623  
+Iteration 3:   log likelihood = -352.17623  
+Iteration 4:   log likelihood = -352.17619  
+
+Logistic regression                             Number of obs     =      1,000
+                                                LR chi2(2)        =     105.57
+                                                Prob > chi2       =     0.0000
+Log likelihood = -352.17619                     Pseudo R2         =     0.1304
+
+------------------------------------------------------------------------------
+       fired |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      newage |   1.497132   .2054543     7.29   0.000     1.094449    1.899815
+        perf |  -.5495806   .1254036    -4.38   0.000    -.7953671   -.3037941
+       _cons |  -.5632523   .4861158    -1.16   0.247    -1.516022    .3895172
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         margins, dydx (newage perf) atmeans
+
+Conditional marginal effects                    Number of obs     =      1,000
+Model VCE    : OIM
+
+Expression   : Pr(fired), predict()
+dy/dx w.r.t. : newage perf
+at           : newage          =        .366 (mean)
+               perf            =      4.0316 (mean)
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      newage |   .1311375   .0177875     7.37   0.000     .0962747    .1660002
+        perf |  -.0481391   .0097417    -4.94   0.000    -.0672325   -.0290457
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         margins, dydx (newage perf)
+
+Average marginal effects                        Number of obs     =      1,000
+Model VCE    : OIM
+
+Expression   : Pr(fired), predict()
+dy/dx w.r.t. : newage perf
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      newage |    .160316   .0212621     7.54   0.000      .118643     .201989
+        perf |  -.0588502   .0131799    -4.47   0.000    -.0846824    -.033018
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         lstat
+
+Logistic model for fired
+
+              -------- True --------
+Classified |         D            ~D  |      Total
+-----------+--------------------------+-----------
+     +     |         4             4  |          8
+     -     |       136           856  |        992
+-----------+--------------------------+-----------
+   Total   |       140           860  |       1000
+
+Classified + if predicted Pr(D) >= .5
+True D defined as fired != 0
+--------------------------------------------------
+Sensitivity                     Pr( +| D)    2.86%
+Specificity                     Pr( -|~D)   99.53%
+Positive predictive value       Pr( D| +)   50.00%
+Negative predictive value       Pr(~D| -)   86.29%
+--------------------------------------------------
+False + rate for true ~D        Pr( +|~D)    0.47%
+False - rate for true D         Pr( -| D)   97.14%
+False + rate for classified +   Pr(~D| +)   50.00%
+False - rate for classified -   Pr( D| -)   13.71%
+--------------------------------------------------
+Correctly classified                        86.00%
+--------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         reg perf age
+
+      Source |       SS           df       MS      Number of obs   =     1,000
+-------------+----------------------------------   F(1, 998)       =    116.12
+       Model |  260.193347         1  260.193347   Prob > F        =    0.0000
+    Residual |  2236.24809       998  2.24072955   R-squared       =    0.1042
+-------------+----------------------------------   Adj R-squared   =    0.1033
+       Total |  2496.44144       999  2.49894038   Root MSE        =    1.4969
+
+------------------------------------------------------------------------------
+        perf |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         age |   -.060004   .0055684   -10.78   0.000     -.070931    -.049077
+       _cons |   6.831027   .2640634    25.87   0.000     6.312844     7.34921
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         predict res_1, residual
+(1 missing value generated)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         logit fired age res_1
+
+Iteration 0:   log likelihood = -404.96349  
+Iteration 1:   log likelihood = -339.66771  
+Iteration 2:   log likelihood = -325.20838  
+Iteration 3:   log likelihood = -324.78173  
+Iteration 4:   log likelihood = -324.78153  
+Iteration 5:   log likelihood = -324.78153  
+
+Logistic regression                             Number of obs     =      1,000
+                                                LR chi2(2)        =     160.36
+                                                Prob > chi2       =     0.0000
+Log likelihood = -324.78153                     Pseudo R2         =     0.1980
+
+------------------------------------------------------------------------------
+       fired |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         age |   .1651976   .0155208    10.64   0.000     .1347773    .1956178
+       res_1 |  -.5060311   .1306587    -3.87   0.000    -.7621175   -.2499447
+       _cons |  -10.17115   .8337427   -12.20   0.000    -11.80525   -8.537039
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         margins, dydx (age res_1) atmeans
+
+Conditional marginal effects                    Number of obs     =      1,000
+Model VCE    : OIM
+
+Expression   : Pr(fired), predict()
+dy/dx w.r.t. : age res_1
+at           : age             =      46.654 (mean)
+               res_1           =   -5.90e-10 (mean)
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         age |   .0119388   .0010322    11.57   0.000     .0099157    .0139619
+       res_1 |  -.0365708   .0086569    -4.22   0.000     -.053538   -.0196035
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         margins, dydx (age res_1)
+
+Average marginal effects                        Number of obs     =      1,000
+Model VCE    : OIM
+
+Expression   : Pr(fired), predict()
+dy/dx w.r.t. : age res_1
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         age |   .0163634   .0013256    12.34   0.000     .0137653    .0189615
+       res_1 |  -.0501241   .0126757    -3.95   0.000     -.074968   -.0252802
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         lstat
+
+Logistic model for fired
+
+              -------- True --------
+Classified |         D            ~D  |      Total
+-----------+--------------------------+-----------
+     +     |        14             8  |         22
+     -     |       126           852  |        978
+-----------+--------------------------+-----------
+   Total   |       140           860  |       1000
+
+Classified + if predicted Pr(D) >= .5
+True D defined as fired != 0
+--------------------------------------------------
+Sensitivity                     Pr( +| D)   10.00%
+Specificity                     Pr( -|~D)   99.07%
+Positive predictive value       Pr( D| +)   63.64%
+Negative predictive value       Pr(~D| -)   87.12%
+--------------------------------------------------
+False + rate for true ~D        Pr( +|~D)    0.93%
+False - rate for true D         Pr( -| D)   90.00%
+False + rate for classified +   Pr(~D| +)   36.36%
+False - rate for classified -   Pr( D| -)   12.88%
+--------------------------------------------------
+Correctly classified                        86.60%
+--------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         logit fired newage res_1
+
+Iteration 0:   log likelihood = -404.96349  
+Iteration 1:   log likelihood =  -365.7578  
+Iteration 2:   log likelihood = -360.77755  
+Iteration 3:   log likelihood = -360.73383  
+Iteration 4:   log likelihood = -360.73381  
+
+Logistic regression                             Number of obs     =      1,000
+                                                LR chi2(2)        =      88.46
+                                                Prob > chi2       =     0.0000
+Log likelihood = -360.73381                     Pseudo R2         =     0.1092
+
+------------------------------------------------------------------------------
+       fired |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      newage |   1.800838   .2079569     8.66   0.000      1.39325    2.208426
+       res_1 |  -.2435913    .105459    -2.31   0.021    -.4502872   -.0368955
+       _cons |  -2.768844   .1711445   -16.18   0.000    -3.104281   -2.433407
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+.  do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         margins, dydx (newage res_1) atmeans
+
+Conditional marginal effects                    Number of obs     =      1,000
+Model VCE    : OIM
+
+Expression   : Pr(fired), predict()
+dy/dx w.r.t. : newage res_1
+at           : newage          =        .366 (mean)
+               res_1           =   -5.90e-10 (mean)
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      newage |   .1737029   .0173133    10.03   0.000     .1397695    .2076364
+       res_1 |   -.023496   .0098183    -2.39   0.017    -.0427396   -.0042524
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         margins, dydx (newage res_1)
+
+Average marginal effects                        Number of obs     =      1,000
+Model VCE    : OIM
+
+Expression   : Pr(fired), predict()
+dy/dx w.r.t. : newage res_1
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      newage |   .1970918   .0219133     8.99   0.000     .1541425    .2400412
+       res_1 |  -.0266597   .0115128    -2.32   0.021    -.0492244   -.0040951
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\33\STD2d5c_000000.tmp"
+
+.         lstat
+
+Logistic model for fired
+
+              -------- True --------
+Classified |         D            ~D  |      Total
+-----------+--------------------------+-----------
+     +     |         0             0  |          0
+     -     |       140           860  |       1000
+-----------+--------------------------+-----------
+   Total   |       140           860  |       1000
+
+Classified + if predicted Pr(D) >= .5
+True D defined as fired != 0
+--------------------------------------------------
+Sensitivity                     Pr( +| D)    0.00%
+Specificity                     Pr( -|~D)  100.00%
+Positive predictive value       Pr( D| +)       .%
+Negative predictive value       Pr(~D| -)   86.00%
+--------------------------------------------------
+False + rate for true ~D        Pr( +|~D)    0.00%
+False - rate for true D         Pr( -| D)  100.00%
+False + rate for classified +   Pr(~D| +)       .%
+False - rate for classified -   Pr( D| -)   14.00%
+--------------------------------------------------
+Correctly classified                        86.00%
+--------------------------------------------------
+
+. 
+end of do-file
+

@@ -1,0 +1,14 @@
+	(1)
+VARIABLES	Model 2
+	
+age	49.95
+	(33.52)
+famsze	-477.9**
+	(216.1)
+Constant	4,200
+	(2,595)
+	
+Observations	3,063
+R-squared	0.003
+Standard errors in parentheses	
+*** p<0.01, ** p<0.05, * p<0.1	

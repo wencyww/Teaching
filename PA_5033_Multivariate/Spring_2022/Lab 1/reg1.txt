@@ -1,0 +1,14 @@
+	(1)	(2)
+VARIABLES	Model 1	Model 2
+		
+famsze	-0.544***	-482.6**
+	(0.0626)	(219.6)
+age	-0.0670***	42.14
+	(0.00972)	(34.05)
+Constant	17.79***	4,826*
+	(0.752)	(2,637)
+		
+Observations	3,064	3,064
+R-squared	0.033	0.002
+Standard errors in parentheses		
+*** p<0.01, ** p<0.05, * p<0.1		

@@ -1,0 +1,150 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  O:\wang6054\PA 5033 Spring 2022\Lab 3&4\Lab3_log.log
+  log type:  text
+ opened on:  15 Apr 2022, 14:19:28
+
+. ssc install outreg2
+checking outreg2 consistency and verifying not already installed...
+all files already exist and are up to date.
+
+. 
+. use PRtime.dta
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b08_000000.tmp"
+
+.         tsset yr
+
+Time variable: yr, 50 to 87
+        Delta: 1 unit
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b08_000000.tmp"
+
+.         gen prgnp_1 = L.prgnp   
+(1 missing value generated)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b08_000000.tmp"
+
+.         reg prepop avewage prgnp_1 usgnp yr
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(4, 32)        =     50.14
+       Model |  .034914612         4  .008728653   Prob > F        =    0.0000
+    Residual |  .005570632        32  .000174082   R-squared       =    0.8624
+-------------+----------------------------------   Adj R-squared   =    0.8452
+       Total |  .040485244        36   .00112459   Root MSE        =    .01319
+
+------------------------------------------------------------------------------
+      prepop | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     avewage |  -.0412476   .0068107    -6.06   0.000    -.0551205   -.0273747
+     prgnp_1 |   .0000304   .0000116     2.61   0.013     6.73e-06    .0000541
+       usgnp |    .000135   .0000279     4.84   0.000     .0000782    .0001918
+          yr |  -.0096926   .0018979    -5.11   0.000    -.0135585   -.0058267
+       _cons |   .7423331   .0749158     9.91   0.000     .5897347    .8949315
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b08_000000.tmp"
+
+.         outreg2 using Lab3_regressions.doc, replace ctitle(OLS 1)
+C:\Users\wang6054\ado\plus/o/outreg2.ado
+Lab3_regressions.doc
+dir : seeout
+
+. 
+end of do-file
+
+. shellout using `"Lab3_regressions.doc"'
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b08_000000.tmp"
+
+.         reg avewage prepop prgnp
+
+      Source |       SS           df       MS      Number of obs   =        38
+-------------+----------------------------------   F(2, 35)        =    300.53
+       Model |  78.3757269         2  39.1878634   Prob > F        =    0.0000
+    Residual |  4.56381506        35  .130394716   R-squared       =    0.9450
+-------------+----------------------------------   Adj R-squared   =    0.9418
+       Total |   82.939542        37  2.24160924   Root MSE        =     .3611
+
+------------------------------------------------------------------------------
+     avewage | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+      prepop |  -11.14991   2.544263    -4.38   0.000    -16.31504   -5.984778
+       prgnp |   .0009349   .0000749    12.49   0.000     .0007829    .0010868
+       _cons |   3.993616   1.149867     3.47   0.001     1.659263     6.32797
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b08_000000.tmp"
+
+.         outreg2 using Lab3_regressions.doc, append ctitle(OLS 2)
+Lab3_regressions.doc
+dir : seeout
+
+. 
+end of do-file
+
+. shellout using `"Lab3_regressions.doc"'
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b08_000000.tmp"
+
+.         reg prepop prgnp prgnp_1 usgnp yr
+
+      Source |       SS           df       MS      Number of obs   =        37
+-------------+----------------------------------   F(4, 32)        =     44.65
+       Model |  .034333544         4  .008583386   Prob > F        =    0.0000
+    Residual |    .0061517        32  .000192241   R-squared       =    0.8481
+-------------+----------------------------------   Adj R-squared   =    0.8291
+       Total |  .040485244        36   .00112459   Root MSE        =    .01387
+
+------------------------------------------------------------------------------
+      prepop | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       prgnp |   .0001705    .000031     5.49   0.000     .0001073    .0002337
+     prgnp_1 |  -.0001165   .0000287    -4.07   0.000    -.0001749   -.0000581
+       usgnp |  -.0000109   .0000287    -0.38   0.706    -.0000694    .0000475
+          yr |  -.0076858   .0020125    -3.82   0.001    -.0117851   -.0035864
+       _cons |   .7906815   .0776855    10.18   0.000     .6324413    .9489218
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b08_000000.tmp"
+
+.                 test prgnp_1 usgnp yr
+
+ ( 1)  prgnp_1 = 0
+ ( 2)  usgnp = 0
+ ( 3)  yr = 0
+
+       F(  3,    32) =   21.09
+            Prob > F =    0.0000
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\STD3b08_000000.tmp"
+
+.                 predict yhat
+(option xb assumed; fitted values)
+(1 missing value generated)
+
+. 
+end of do-file
+

@@ -1,0 +1,30 @@
+{\rtf1\fs24
+\trowd\trgaph75\trleft-75\intbl\trqc\clbrdrt\brdrs\cellx1872\clbrdrt\brdrs\cellx3600\clbrdrt\brdrs\cellx5328\clbrdrt\brdrs\cellx6912\clbrdrt\brdrs\cellx8784
+\ql \cell\qc (1)\cell\qc (2)\cell\qc (3)\cell\qc (4)\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx1872\cellx3600\cellx5328\cellx6912\cellx8784
+\trowd\trgaph75\trleft-75\trqc\clbrdrb\brdrs\cellx1872\clbrdrb\brdrs\cellx3600\clbrdrb\brdrs\cellx5328\clbrdrb\brdrs\cellx6912\clbrdrb\brdrs\cellx8784
+\ql VARIABLES\cell\qc OLS\cell\qc Distributed\cell\qc Dynamic\cell\qc Differenced\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx1872\cellx3600\cellx5328\cellx6912\cellx8784
+\ql \cell\qc \cell\qc \cell\qc \cell\qc \cell\row
+\ql usgnp\cell\qc 2.92e-05***\cell\qc -2.08e-05\cell\qc 4.68e-06\cell\qc \cell\row
+\ql \cell\qc (6.43e-06)\cell\qc (8.24e-05)\cell\qc (4.43e-06)\cell\qc \cell\row
+\ql usgnp_1\cell\qc \cell\qc -7.44e-05\cell\qc \cell\qc \cell\row
+\ql \cell\qc \cell\qc (0.000125)\cell\qc \cell\qc \cell\row
+\ql usgnp_2\cell\qc \cell\qc 0.000133\cell\qc \cell\qc \cell\row
+\ql \cell\qc \cell\qc (8.22e-05)\cell\qc \cell\qc \cell\row
+\ql prunem_1\cell\qc \cell\qc \cell\qc 0.856***\cell\qc \cell\row
+\ql \cell\qc \cell\qc \cell\qc (0.0890)\cell\qc \cell\row
+\ql usgnp_d\cell\qc \cell\qc \cell\qc \cell\qc -0.000147***\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc (3.65e-05)\cell\row
+\ql prunemp_1_d\cell\qc \cell\qc \cell\qc \cell\qc 0.291**\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc (0.143)\cell\row
+\ql Constant\cell\qc 0.0812***\cell\qc 0.0706***\cell\qc 0.0107\cell\qc 0.0101***\cell\row
+\ql \cell\qc (0.0160)\cell\qc (0.0166)\cell\qc (0.0110)\cell\qc (0.00334)\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc \cell\row
+\ql Observations\cell\qc 38\cell\qc 36\cell\qc 37\cell\qc 36\cell\row
+\trowd\trgaph75\trleft-75\trqc\trbrdrb\brdrs\clbrdrb\brdrs\cellx1872\clbrdrb\brdrs\cellx3600\clbrdrb\brdrs\cellx5328\clbrdrb\brdrs\cellx6912\clbrdrb\brdrs\cellx8784
+\ql R-squared\cell\qc 0.364\cell\qc 0.488\cell\qc 0.837\cell\qc 0.367\cell\row
+\pard\qc
+Standard errors in parentheses\par
+*** p<0.01, ** p<0.05, * p<0.1\par
+}

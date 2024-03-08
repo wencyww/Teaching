@@ -1,0 +1,411 @@
+-----------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  O:\wang6054\PA5032_Spring2021\Lab2\lab2.log
+  log type:  text
+ opened on:  29 Jan 2021, 12:54:18
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+. sum family_income
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+family_inc~e |      9,607    73245.59    85266.33     -84022    2229087
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+. drop if family_income < 0
+(6 observations deleted)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+. generate family_incomeunder100k = family_income
+
+. 
+. *Then, we would recode our new total family income variable so that households with a family in
+> come of less than $100,000 are assigned a value of 1, and families with incomes of $100,000 or 
+> greater are assigned a value of 0.
+. recode family_incomeunder100k(0/99999=1)
+(family_incomeunder100k: 7399 changes made)
+
+. recode family_incomeunder100k(100000/9999997=0)
+(family_incomeunder100k: 2202 changes made)
+
+. sum family_incomeunder100k
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+family_~100k |      9,601    .7706489    .4204374          0          1
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+. reg family_income reference_age
+variable reference_age not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+. reg family_income age_reference
+
+      Source |       SS           df       MS      Number of obs   =     9,601
+-------------+----------------------------------   F(1, 9599)      =      9.25
+       Model |  6.7121e+10         1  6.7121e+10   Prob > F        =    0.0024
+    Residual |  6.9686e+13     9,599  7.2597e+09   R-squared       =    0.0010
+-------------+----------------------------------   Adj R-squared   =    0.0009
+       Total |  6.9753e+13     9,600  7.2659e+09   Root MSE        =     85204
+
+-------------------------------------------------------------------------------
+family_income |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+age_reference |   96.95185   31.88495     3.04   0.002     34.45061    159.4531
+        _cons |   68818.64    1716.06    40.10   0.000      65454.8    72182.48
+-------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+. ttest age_reference==29
+
+One-sample t test
+------------------------------------------------------------------------------
+Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+age_re~e |   9,601    46.39913    .2783421    27.27327    45.85352    46.94473
+------------------------------------------------------------------------------
+    mean = mean(age_reference)                                    t =  62.5099
+Ho: mean = 29                                    degrees of freedom =     9600
+
+    Ha: mean < 29               Ha: mean != 29                 Ha: mean > 29
+ Pr(T < t) = 1.0000         Pr(|T| > |t|) = 0.0000          Pr(T > t) = 0.0000
+
+. 
+end of do-file
+
+. dis ( 46.39913 -29)/ .2783421
+62.509875
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+. ttest age_reference, by(family_incomeunder100k)
+
+Two-sample t test with equal variances
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+       0 |   2,202    47.57811    .2828598    13.27333    47.02341    48.13281
+       1 |   7,399    46.04825    .3511374    30.20394    45.35992    46.73658
+---------+--------------------------------------------------------------------
+combined |   9,601    46.39913    .2783421    27.27327    45.85352    46.94473
+---------+--------------------------------------------------------------------
+    diff |            1.529861    .6619147                .2323684    2.827354
+------------------------------------------------------------------------------
+    diff = mean(0) - mean(1)                                      t =   2.3113
+Ho: diff = 0                                     degrees of freedom =     9599
+
+    Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = 0.9896         Pr(|T| > |t|) = 0.0208          Pr(T > t) = 0.0104
+
+. 
+end of do-file
+
+. dis  1.529861/.6619147
+2.3112661
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+. reg family_income age_reference 
+
+      Source |       SS           df       MS      Number of obs   =     9,601
+-------------+----------------------------------   F(1, 9599)      =      9.25
+       Model |  6.7121e+10         1  6.7121e+10   Prob > F        =    0.0024
+    Residual |  6.9686e+13     9,599  7.2597e+09   R-squared       =    0.0010
+-------------+----------------------------------   Adj R-squared   =    0.0009
+       Total |  6.9753e+13     9,600  7.2659e+09   Root MSE        =     85204
+
+-------------------------------------------------------------------------------
+family_income |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+age_reference |   96.95185   31.88495     3.04   0.002     34.45061    159.4531
+        _cons |   68818.64    1716.06    40.10   0.000      65454.8    72182.48
+-------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+. reg healthcare_expenditure family_income reference_income
+
+      Source |       SS           df       MS      Number of obs   =     9,601
+-------------+----------------------------------   F(2, 9598)      =    656.43
+       Model |  2.6430e+10         2  1.3215e+10   Prob > F        =    0.0000
+    Residual |  1.9322e+11     9,598  20131557.8   R-squared       =    0.1203
+-------------+----------------------------------   Adj R-squared   =    0.1201
+       Total |  2.1965e+11     9,600    22880470   Root MSE        =    4486.8
+
+----------------------------------------------------------------------------------
+healthcare_exp~e |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-----------------+----------------------------------------------------------------
+   family_income |   .0217086   .0008312    26.12   0.000     .0200793    .0233379
+reference_income |  -.0043529   .0011775    -3.70   0.000    -.0066611   -.0020448
+           _cons |    1881.66   60.40357    31.15   0.000     1763.256    2000.064
+----------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+. reg family_income age_reference number_children
+
+      Source |       SS           df       MS      Number of obs   =     9,601
+-------------+----------------------------------   F(2, 9598)      =     16.62
+       Model |  2.4070e+11         2  1.2035e+11   Prob > F        =    0.0000
+    Residual |  6.9512e+13     9,598  7.2423e+09   R-squared       =    0.0035
+-------------+----------------------------------   Adj R-squared   =    0.0032
+       Total |  6.9753e+13     9,600  7.2659e+09   Root MSE        =     85102
+
+---------------------------------------------------------------------------------
+  family_income |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+----------------+----------------------------------------------------------------
+  age_reference |   125.0111    32.3585     3.86   0.000     61.58157    188.4406
+number_children |   3589.166   733.1275     4.90   0.000     2152.081    5026.251
+          _cons |   64634.84   1915.242    33.75   0.000     60880.57    68389.12
+---------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. reg family_income age_reference number_children reference_income
+
+      Source |       SS           df       MS      Number of obs   =     9,601
+-------------+----------------------------------   F(3, 9597)      =   4591.37
+       Model |  4.1110e+13         3  1.3703e+13   Prob > F        =    0.0000
+    Residual |  2.8643e+13     9,597  2.9846e+09   R-squared       =    0.5894
+-------------+----------------------------------   Adj R-squared   =    0.5892
+       Total |  6.9753e+13     9,600  7.2659e+09   Root MSE        =     54631
+
+----------------------------------------------------------------------------------
+   family_income |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-----------------+----------------------------------------------------------------
+   age_reference |   261.9818   20.80549    12.59   0.000     221.1987     302.765
+ number_children |  -262.6666    471.781    -0.56   0.578    -1187.457    662.1238
+reference_income |   1.089644   .0093117   117.02   0.000     1.071391    1.107897
+           _cons |   17785.03   1293.033    13.75   0.000     15250.42    20319.65
+----------------------------------------------------------------------------------
+
+. test age_reference==number_children
+
+ ( 1)  age_reference - number_children = 0
+
+       F(  1,  9597) =    1.25
+            Prob > F =    0.2630
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+.         ssc install outreg2
+checking outreg2 consistency and verifying not already installed...
+all files already exist and are up to date.
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+.         ssc install outreg2
+checking outreg2 consistency and verifying not already installed...
+all files already exist and are up to date.
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+.         reg family_income age_reference
+
+      Source |       SS           df       MS      Number of obs   =     9,601
+-------------+----------------------------------   F(1, 9599)      =      9.25
+       Model |  6.7121e+10         1  6.7121e+10   Prob > F        =    0.0024
+    Residual |  6.9686e+13     9,599  7.2597e+09   R-squared       =    0.0010
+-------------+----------------------------------   Adj R-squared   =    0.0009
+       Total |  6.9753e+13     9,600  7.2659e+09   Root MSE        =     85204
+
+-------------------------------------------------------------------------------
+family_income |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+age_reference |   96.95185   31.88495     3.04   0.002     34.45061    159.4531
+        _cons |   68818.64    1716.06    40.10   0.000      65454.8    72182.48
+-------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+.         outreg2 using lab2_reg.doc, replace ctitle(Model 1)
+lab2_reg.doc
+dir : seeout
+
+. 
+end of do-file
+
+. shellout using `"lab2_reg.doc"'
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+.         reg family_income age_reference number_children
+
+      Source |       SS           df       MS      Number of obs   =     9,601
+-------------+----------------------------------   F(2, 9598)      =     16.62
+       Model |  2.4070e+11         2  1.2035e+11   Prob > F        =    0.0000
+    Residual |  6.9512e+13     9,598  7.2423e+09   R-squared       =    0.0035
+-------------+----------------------------------   Adj R-squared   =    0.0032
+       Total |  6.9753e+13     9,600  7.2659e+09   Root MSE        =     85102
+
+---------------------------------------------------------------------------------
+  family_income |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+----------------+----------------------------------------------------------------
+  age_reference |   125.0111    32.3585     3.86   0.000     61.58157    188.4406
+number_children |   3589.166   733.1275     4.90   0.000     2152.081    5026.251
+          _cons |   64634.84   1915.242    33.75   0.000     60880.57    68389.12
+---------------------------------------------------------------------------------
+
+.         outreg2 using lab2_reg.doc, append ctitle(Model 2)
+lab2_reg.doc
+dir : seeout
+
+. 
+end of do-file
+
+. shellout using `"lab2_reg.doc"'
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+.         ssc install estout
+checking estout consistency and verifying not already installed...
+all files already exist and are up to date.
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+.         reg family_income age_reference
+
+      Source |       SS           df       MS      Number of obs   =     9,601
+-------------+----------------------------------   F(1, 9599)      =      9.25
+       Model |  6.7121e+10         1  6.7121e+10   Prob > F        =    0.0024
+    Residual |  6.9686e+13     9,599  7.2597e+09   R-squared       =    0.0010
+-------------+----------------------------------   Adj R-squared   =    0.0009
+       Total |  6.9753e+13     9,600  7.2659e+09   Root MSE        =     85204
+
+-------------------------------------------------------------------------------
+family_income |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+age_reference |   96.95185   31.88495     3.04   0.002     34.45061    159.4531
+        _cons |   68818.64    1716.06    40.10   0.000      65454.8    72182.48
+-------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+.         est store m1, title(Model 1) 
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+.         estout m1, cells(b(star fmt(3)) se(par fmt(2))) replace starlevels(* 0.1 ** 0.05 *** 0.
+> 01) legend label varlabels(_cons Constant)stats(r2 N) 
+
+------------------------------------
+                          Model 1   
+                             b/se   
+------------------------------------
+AGE OF REFERENCE P~N       96.952***
+                          (31.88)   
+Constant                68818.643***
+                        (1716.06)   
+------------------------------------
+r2                          0.001   
+N                        9601.000   
+------------------------------------
+* p<0.1, ** p<0.05, *** p<0.01
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+.         reg family_income age_reference number_children
+
+      Source |       SS           df       MS      Number of obs   =     9,601
+-------------+----------------------------------   F(2, 9598)      =     16.62
+       Model |  2.4070e+11         2  1.2035e+11   Prob > F        =    0.0000
+    Residual |  6.9512e+13     9,598  7.2423e+09   R-squared       =    0.0035
+-------------+----------------------------------   Adj R-squared   =    0.0032
+       Total |  6.9753e+13     9,600  7.2659e+09   Root MSE        =     85102
+
+---------------------------------------------------------------------------------
+  family_income |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+----------------+----------------------------------------------------------------
+  age_reference |   125.0111    32.3585     3.86   0.000     61.58157    188.4406
+number_children |   3589.166   733.1275     4.90   0.000     2152.081    5026.251
+          _cons |   64634.84   1915.242    33.75   0.000     60880.57    68389.12
+---------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+.         est store m2, title(Model 2)
+
+. 
+end of do-file
+
+. do "C:\Users\wang6054\AppData\Local\Temp\129\STD1c1e4_000000.tmp"
+
+.         estout m1 m2, cells(b(star fmt(3)) se(par fmt(2))) replace starlevels(* 0.1 ** 0.05 ***
+>  0.01) legend label varlabels(_cons Constant)stats(r2 N) 
+
+----------------------------------------------------
+                          Model 1         Model 2   
+                             b/se            b/se   
+----------------------------------------------------
+AGE OF REFERENCE P~N       96.952***      125.011***
+                          (31.88)         (32.36)   
+# CHILDREN IN FU                         3589.166***
+                                         (733.13)   
+Constant                68818.643***    64634.844***
+                        (1716.06)       (1915.24)   
+----------------------------------------------------
+r2                          0.001           0.003   
+N                        9601.000        9601.000   
+----------------------------------------------------
+* p<0.1, ** p<0.05, *** p<0.01
+
+. 
+end of do-file
+
